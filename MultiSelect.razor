@@ -1,0 +1,121 @@
+﻿@using BlazorMultiSelectComponent.EventHandlers
+@namespace BlazorMultiSelectComponent
+@typeparam TOption
+
+<div class="multiselect-wrapper">
+    <label class="multiselect-label">
+        @($"{Label}:")
+    </label>
+    <div class="multiselect-container" @onclick=@(() => ToggleOpen(true)) @onclick:preventDefault="true" @key="_isDropdownOpen">
+        <div class="selected-container">
+            @if (Selected != null && Selected.Any())
+            {
+                @foreach (var selectedOption in Selected)
+                {
+                    <div class="item-preview">
+                        <span>
+                            @(GetDisplayText(selectedOption))
+                        </span>
+                        <button class="btn btn-close" type="button" @onclick="() => HandleRemove(selectedOption)" @onclick:stopPropagation="true"></button>
+                    </div>
+                }
+            }
+        </div>
+        @if (_isDropdownOpen)
+        {
+            <div class="options-container" @onmouseleave=@(() => ToggleOpen(false))>
+                @if (DisplayOptions == null || !DisplayOptions.Any())
+                {
+                    <div>None</div>
+                }
+                else
+                {
+                    @foreach (var option in DisplayOptions)
+                    {
+                        <div @onclick=@(() => HandleChange(option)) @onclick:preventDefault="true" class="multiselect-option">@GetDisplayText(option)</div>
+                    }
+                }
+            </div>
+        }
+        <button class="btn btn-close close-button" @onclick="ClearSelected">
+        </button>
+        <button class=@($"oi {(_isDropdownOpen ? "oi-chevron-top" : "oi-chevron-bottom")} dropdown-button")>
+        </button>
+    </div>
+</div>
+
+@code {
+    private bool _isDropdownOpen = false;
+
+    [Parameter]
+    public string? Label { get; set; } = "";
+    [Parameter]
+    public ICollection<TOption>? Options { get; set; }
+    [Parameter]
+    public string? DisplayField { get; set; }
+    [Parameter]
+    public EventCallback<ICollection<TOption>> SelectedChanged { get; set; }
+    [Parameter]
+    public ICollection<TOption> Selected { get; set; } = new List<TOption>();
+
+    private ICollection<TOption> DisplayOptions { get; set; } = new List<TOption>();
+
+    protected override async Task OnParametersSetAsync()
+    {
+        DisplayOptions = Options.Except(Selected).ToList();
+        await base.OnParametersSetAsync();
+    }
+
+    protected async void HandleChange(TOption changedOption)
+    {
+        if (Selected.Contains(changedOption))
+        {
+            Selected.Remove(changedOption);
+            DisplayOptions.Add(changedOption);
+        }
+        else
+        {
+            Selected.Add(changedOption);
+            DisplayOptions.Remove(changedOption);
+        }
+        await RefreshComponent();
+    }
+
+    protected async void HandleRemove(TOption option)
+    {
+        Selected.Remove(option);
+        DisplayOptions.Add(option);
+        await RefreshComponent();
+    }
+
+    protected async void ClearSelected()
+    {
+        Selected.Clear();
+        DisplayOptions = Options.Except(Selected).ToList();
+        await RefreshComponent();
+    }
+
+    private async Task RefreshComponent()
+    {
+        await SelectedChanged.InvokeAsync(Selected);
+        await InvokeAsync(StateHasChanged);
+    }
+    protected string GetDisplayText(TOption item)
+    {
+        if (DisplayField != null)
+        {
+            var property = typeof(TOption).GetProperty(DisplayField);
+            if (property != null)
+            {
+                return property.GetValue(item).ToString();
+            }
+        }
+        return "";
+    }
+
+    protected async void ToggleOpen(bool isOpen)
+    {
+        _isDropdownOpen = isOpen;
+        await InvokeAsync(StateHasChanged);
+    }
+}
