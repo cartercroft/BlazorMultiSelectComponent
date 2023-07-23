@@ -1,42 +1,44 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk.Razor">
 
-  <PropertyGroup>
-    <TargetFramework>net6.0</TargetFramework>
-    <Nullable>enable</Nullable>
-    <ImplicitUsings>enable</ImplicitUsings>
-    <PackageId>BlazorMultiselectComponent</PackageId>
-    <Authors>Carter Croft</Authors>
-    <Product>BlazorMultiselectComponent</Product>
-    <Description>A multiselect component which supports binding to a collection of any type.</Description>
-    <PackageReadmeFile>README.md</PackageReadmeFile>
-    <PackageTags>blazor;multiselect;select;</PackageTags>
-    <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
-    <PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
-  </PropertyGroup>
+	<PropertyGroup>
+		<TargetFramework>net6.0</TargetFramework>
+		<Nullable>enable</Nullable>
+		<ImplicitUsings>enable</ImplicitUsings>
+		<PackageId>BlazorMultiselectComponent</PackageId>
+		<Authors>Carter Croft</Authors>
+		<Product>BlazorMultiselectComponent</Product>
+		<Description>A multiselect component which supports binding to a collection of any type.</Description>
+		<VersionPrefix>1.0.1</VersionPrefix>
+		<PackageReadmeFile>README.md</PackageReadmeFile>
+		<PackageTags>blazor;multiselect;multiple;select;input;blazor-server;form;dropdown;</PackageTags>
+		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
+		<PackageLicenseFile>LICENSE.txt</PackageLicenseFile>
+		<RepositoryUrl>https://github.com/cartercroft/BlazorMultiSelectComponent</RepositoryUrl>
+	</PropertyGroup>
 
-  <ItemGroup>
-    <Content Include="README.md" />
-	<Content Include="LICENSE.txt" />
-  </ItemGroup>
+	<ItemGroup>
+		<Content Include="README.md" />
+		<Content Include="LICENSE.txt" />
+	</ItemGroup>
 
 
-  <ItemGroup>
-    <SupportedPlatform Include="browser" />
-  </ItemGroup>
+	<ItemGroup>
+		<SupportedPlatform Include="browser" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0" />
-  </ItemGroup>
+	<ItemGroup>
+		<PackageReference Include="Microsoft.AspNetCore.Components.Web" Version="6.0.0" />
+	</ItemGroup>
 
-  <ItemGroup>
-    <None Update="README.md">
-      <Pack>True</Pack>
-      <PackagePath>\</PackagePath>
-    </None>
-	<None Update="LICENSE.txt">
-		<Pack>True</Pack>
-		<PackagePath>\</PackagePath>
-	</None>
-  </ItemGroup>
+	<ItemGroup>
+		<None Update="README.md">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+		<None Update="LICENSE.txt">
+			<Pack>True</Pack>
+			<PackagePath>\</PackagePath>
+		</None>
+	</ItemGroup>
 
 </Project>
