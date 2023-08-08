@@ -8,7 +8,7 @@
 		<Authors>Carter Croft</Authors>
 		<Product>BlazorMultiselectComponent</Product>
 		<Description>A multiselect component which supports binding to a collection of any type.</Description>
-		<VersionPrefix>1.0.1</VersionPrefix>
+		<VersionPrefix>1.0.4</VersionPrefix>
 		<PackageReadmeFile>README.md</PackageReadmeFile>
 		<PackageTags>blazor;multiselect;multiple;select;input;blazor-server;form;dropdown;</PackageTags>
 		<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
